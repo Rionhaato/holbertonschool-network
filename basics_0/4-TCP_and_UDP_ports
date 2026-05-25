@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Displays listening TCP and UDP sockets with their owning process.
+netstat -lpn
