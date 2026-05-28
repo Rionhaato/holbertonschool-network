@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 # Configure localhost and facebook.com entries in /etc/hosts.
 
-sed -i -E '/(^|[[:space:]])localhost([[:space:]]|$)/d; /(^|[[:space:]])facebook\.com([[:space:]]|$)/d' /etc/hosts
-printf "127.0.0.2 localhost\n8.8.8.8 facebook.com\n" >> /etc/hosts
+hosts_file=$(mktemp)
+
+grep -vE '(^|[[:space:]])(localhost|facebook\.com)([[:space:]]|$)' /etc/hosts > "$hosts_file"
+printf "127.0.0.2 localhost\n8.8.8.8 facebook.com\n" >> "$hosts_file"
+cat "$hosts_file" > /etc/hosts
+rm -f "$hosts_file"
