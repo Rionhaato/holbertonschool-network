@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 # Display all active IPv4 addresses on this machine.
 
-ip -4 addr show scope global up | awk '/inet / {print $2}' | cut -d/ -f1
-ip -4 addr show scope host up | awk '/inet / {print $2}' | cut -d/ -f1
+ifconfig | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
