@@ -1,0 +1,24 @@
+flowchart LR
+    client["Browser / Client"]
+    dns["DNS Resolver"]
+    auth["Authoritative DNS"]
+    internet["Internet / TCP-IP Routing"]
+    firewall["Firewall"]
+    lb["Load Balancer"]
+    web["Web Server"]
+    app["Application Server"]
+    db[("Database")]
+
+    client -- "1. DNS query: www.google.com?" --> dns
+    dns -- "2. recursive lookup" --> auth
+    auth -- "3. returns server IP" --> dns
+    dns -- "4. IP address returned" --> client
+    client -- "5. HTTPS request to server IP:443" --> internet
+    internet -- "6. encrypted TLS traffic" --> firewall
+    firewall -- "7. allowed HTTPS traffic" --> lb
+    lb -- "8. distributes request" --> web
+    web -- "9. asks app to generate page" --> app
+    app -- "10. requests data" --> db
+    db -- "11. returns data" --> app
+    app -- "12. generated web page" --> web
+    web -- "13. HTTPS response: web page" --> client
